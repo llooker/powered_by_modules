@@ -1,0 +1,29 @@
+## INCLUDE QUERY ID
+
+## View 
+  <div class="container">
+    <div class="row">
+      <h1> Supplier Overview </h1>
+    </div>
+
+    <%= @embed_url %> 
+    <iframe id="looker" width="100%" height="900" src="<%= @embed_url %>">
+    </iframe>
+
+  </div>"
+
+## Controller
+class DashboardController < ApplicationController
+  def supplier_dashboard
+      @options = {
+        embed_url: "/embed/looks/23",
+        height: '2247',
+      }
+
+      @embed_url = Auth::embed_url(@options)
+      # @embed_url = @embed_url + '&embed_domain=http://localhost:3000'
+  end
+end
+
+
+## Model (Authentication)
