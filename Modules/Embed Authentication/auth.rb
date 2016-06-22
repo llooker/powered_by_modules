@@ -10,24 +10,23 @@ class Auth < ActiveRecord::Base
 
     def self.embed_url(additional_data = {})
 
-    url_data = {
-                 # host:               ENV['LOOKER_HOST'],
-                 # secret:             ENV['EMBED_SECRET'],
-                 host:               'demonew.looker.com',
-                 secret:             'c997baa6ecad2b3a6ea871a63fbae52a68b8cbcbb3b4129f9ae35c5e6019738f',
-                 external_user_id:   102,
-                 first_name:         "Dr",
-                 last_name:          "Strange",
-                 permissions:        ['see_user_dashboards', 'see_lookml_dashboards', 'access_data', 'see_looks', 'download_with_limit', 'explore'],
-                 models:             ['powered_by'],
-                 access_filters:     {:powered_by => {:'products.brand' => "Allegra K"}},
-                 session_length:     30.minutes,
-                 force_logout_login: true
-               }.merge(additional_data)
+      url_data = {        
+        host:               ENV['LOOKER_HOST'],
+        secret:             ENV['EMBED_SECRET'],
+        external_user_id:   102,
+        first_name:         "Dr",
+        last_name:          "Strange",
+        permissions:        ['see_user_dashboards', 'see_lookml_dashboards', 'access_data', 'see_looks', 'download_with_limit', 'explore'],
+        models:             ['powered_by'],
+        access_filters:     {:powered_by => {:'products.brand' => "Allegra K"}},
+        session_length:     30.minutes,
+        embed_domain:       "http://localhost:3000",
+        force_logout_login: true
+      }.merge(additional_data)
 
-    url = Auth::created_signed_embed_url(url_data)
+      url = Auth::created_signed_embed_url(url_data)
 
-    "https://#{url}"
+      "https://#{url}"
 
   end
 
@@ -47,6 +46,7 @@ class Auth < ActiveRecord::Base
     # url/session specific options
     embed_path              = '/login/embed/' + CGI.escape(options[:embed_url])
     json_session_length     = options[:session_length].to_json
+    
     json_force_logout_login = options[:force_logout_login].to_json
 
     # computed options

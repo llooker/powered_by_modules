@@ -1,27 +1,19 @@
-## View 
-  <div class="container">
-    <div class="row">
-      <h1> Supplier Overview </h1>
-    </div>
-
-    <%= @embed_url %> 
-    <iframe id="looker" width="100%" height="900" src="<%= @embed_url %>">
-    </iframe>
-
-  </div>"
 
 ## Controller
 class DashboardController < ApplicationController
-  def supplier_dashboard
+  def user_defined_dashboard
+    # Pass in the Dashboard ID for a User Defined Dashboard
       @options = {
         embed_url: "/embed/dashboards/234",
         height: '2247',
       }
 
       @embed_url = Auth::embed_url(@options)
+
+      # embed_url calls the Authentication Class that generates the full URL with all the parameters that looker requires to authenticate
       # @embed_url = @embed_url + '&embed_domain=http://localhost:3000'
   end
 end
 
 
-## Model (Authentication)
+

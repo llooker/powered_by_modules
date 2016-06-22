@@ -1,20 +1,21 @@
+
 require 'looker-sdk'
 
 module ApplicationHelper
+
 	def self.api_auth
       sdk = LookerSDK::Client.new(
-      #looker options
-        :client_id => "CpBnmvbQprSqchcpbvsf",
-        :client_secret => "Rmt5bvB8T4Y7jGKmfjZGg9nk",
-        :api_endpoint => "https://demonew.looker.com:19999/api/3.0",
-        :connection_options => {:ssl => {:verify => false}}
+      # Looker/API Credentials
+        :client_id => ENV['API_CLIENT_ID'],
+	    :client_secret => ENV['API_SECRET'],
+	    :api_endpoint => ENV['API_ENDPOINT'],
+	    :connection_options => {:ssl => {:verify => false}}
       )
       return sdk
-	end	
+	end
 
 
-
-	def self.get_query_data()
+	def self.get_query_data(query)
 
 		# IF YOU ARE USING ACCESS FILTER FIELDS, you will need to specify the current user's session in the filtered params
 		sdk = api_auth()
@@ -28,7 +29,8 @@ module ApplicationHelper
 	       :limit=>"10",
 	       :query_timezone=>"America/Los_Angeles"
 	    }
-      	return sdk.run_inline_query("json", @query)
+      	return sdk.run_inline_query("json", query)
+
 	end
 
 end

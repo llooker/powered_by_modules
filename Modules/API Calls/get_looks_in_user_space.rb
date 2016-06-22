@@ -1,37 +1,16 @@
+require 'looker-sdk'
+
 module ApplicationHelper
+
 	def self.api_auth
       sdk = LookerSDK::Client.new(
-      #looker options
-        :client_id => "CpBnmvbQprSqchcpbvsf",
-        :client_secret => "Rmt5bvB8T4Y7jGKmfjZGg9nk",
-        :api_endpoint => "https://demonew.looker.com:19999/api/3.0",
-        :connection_options => {:ssl => {:verify => false}}
+      # Looker/API Credentials
+        :client_id => ENV['API_CLIENT_ID'],
+	    :client_secret => ENV['API_SECRET'],
+	    :api_endpoint => ENV['API_ENDPOINT'],
+	    :connection_options => {:ssl => {:verify => false}}
       )
       return sdk
-	end
-
-	def self.get_query_url(look_id)
-	    sdk = api_auth()
-	    look_detail = sdk.look(look_id)
-
-	    look_url = look_detail['url'].split('?', 2).last
-
-	    query_url ="/embed/query/powered_by/order_items?#{look_url}"
-	    return query_url
-	end
-
-
-	def self.get_looks_in_user_space(user_id)
-		sdk = self.api_auth()
-
-      	# fields ={:fields=> 'home_space_id'}
-      	# #space_id = sdk.user(10).to_s
-      	user = sdk.user(user_id)
-      	space_id = user[:home_space_id]
-      	# space_id.to_s
-      	# puts "User " + user_id.to_s + " - " + space_id.to_s
-      	# self.get_looks_in_space(space_id)
-
 	end
 
 	def self.get_looks_by_user(user_id)
@@ -47,8 +26,7 @@ module ApplicationHelper
 	      	end
       	end
 
-      	puts looks_for_user.to_s
-
+      	return looks_for_user
 	end
 
 
