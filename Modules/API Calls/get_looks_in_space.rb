@@ -28,7 +28,6 @@ module ApplicationHelper
      	end
 	end
 
-
   def self.get_look_details(look_id)
 
     sdk = api_auth()
@@ -52,7 +51,5 @@ module ApplicationHelper
       puts "Created User: " + created_user_name + "\n"
           
   end
-
-
 
 end
