@@ -20,7 +20,6 @@ class Auth < ActiveRecord::Base
         models:             ['powered_by'],
         access_filters:     {:powered_by => {:'products.brand' => "Allegra K"}},
         session_length:     30.minutes,
-        embed_domain:       "http://localhost:3000",
         force_logout_login: true
       }.merge(additional_data)
 
