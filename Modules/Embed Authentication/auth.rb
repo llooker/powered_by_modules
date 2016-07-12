@@ -8,24 +8,27 @@ require 'openssl'
 
 class Auth < ActiveRecord::Base
 
-    def self.embed_url(additional_data = {})
+  def self.embed_url(additional_data = {})
 
-      url_data = {        
-        host:               ENV['LOOKER_HOST'],
-        secret:             ENV['EMBED_SECRET'],
-        external_user_id:   102,
-        first_name:         "Dr",
-        last_name:          "Strange",
-        permissions:        ['see_user_dashboards', 'see_lookml_dashboards', 'access_data', 'see_looks', 'download_with_limit', 'explore'],
-        models:             ['powered_by'],
-        access_filters:     {:powered_by => {:'products.brand' => "Allegra K"}},
-        session_length:     30.minutes,
-        force_logout_login: true
-      }.merge(additional_data)
+    url_data = {
+      # System Level Permissions        
+      host:               ENV['LOOKER_HOST'], # ex: [mylooker_instance.looker.com] (include port # if self hosted)
+      secret:             ENV['EMBED_SECRET'], # Secret Key 
+      session_length:     30.minutes,
+      force_logout_login: true
 
-      url = Auth::created_signed_embed_url(url_data)
+      # User Specific Permissions
+      external_user_id:   102, #The External ID must be a Number and must be unique for every embedded User (Primary Key). 
+      first_name:         "Dr",
+      last_name:          "Strange",
+      permissions:        ['see_user_dashboards', 'see_lookml_dashboards', 'access_data', 'see_looks', 'download_with_limit', 'explore'],
+      models:             ['powered_by'],
+      access_filters:     {:powered_by => {:'products.brand' => "Allegra K"}},
+    }.merge(additional_data)
 
-      "https://#{url}"
+    url = Auth::created_signed_embed_url(url_data)
+
+    "https://#{url}"
 
   end
 
@@ -34,6 +37,7 @@ class Auth < ActiveRecord::Base
     # looker options
     secret = options[:secret]
     host = options[:host]
+
     # user options
     json_external_user_id   = options[:external_user_id].to_json
     json_first_name         = options[:first_name].to_json
@@ -45,7 +49,6 @@ class Auth < ActiveRecord::Base
     # url/session specific options
     embed_path              = '/login/embed/' + CGI.escape(options[:embed_url])
     json_session_length     = options[:session_length].to_json
-    
     json_force_logout_login = options[:force_logout_login].to_json
 
     # computed options
