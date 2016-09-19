@@ -14,8 +14,9 @@ Prerequsites: Have a Embedded Explore Page
 ```
 
 ###Step 3: Pass form submission input to the server
-Pass Client information (JS events/Form Fills) to the server via Javascript/Ajax Calls 
-  Modules -> Javascript API -> Client to Server
+Pass Client information (iFrame events/Form Fills) to the server via Javascript/Ajax Calls
+
+Modules -> Javascript API -> Client to Server
 
 ###Step 4: Run API Call to Save a Look
   Modules -> API Calls -> Create Look (Save Look)
