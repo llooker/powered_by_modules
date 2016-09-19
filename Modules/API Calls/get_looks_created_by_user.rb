@@ -2,16 +2,16 @@ require 'looker-sdk'
 
 module ApplicationHelper
 
-	def self.api_auth
+  def self.api_auth
     sdk = LookerSDK::Client.new(
       # Looker/API Credentials
       :client_id => ENV['API_CLIENT_ID'],
-	    :client_secret => ENV['API_SECRET'],
-	    :api_endpoint => ENV['API_ENDPOINT'],
-	    :connection_options => {:ssl => {:verify => false}}
+      :client_secret => ENV['API_SECRET'],
+      :api_endpoint => ENV['API_ENDPOINT'],
+      :connection_options => {:ssl => {:verify => false}}
     )
     return sdk
-	end
+  end
 
   def self.get_looks_by_user(user_id)
     sdk = self.api_auth()

@@ -5,14 +5,14 @@ require 'looker-sdk'
 module ApplicationHelper
 
 	def self.api_auth
-      sdk = LookerSDK::Client.new(
-      # Looker/API Credentials
-        :client_id => ENV['API_CLIENT_ID'],
-	    :client_secret => ENV['API_SECRET'],
-	    :api_endpoint => ENV['API_ENDPOINT'],
-	    :connection_options => {:ssl => {:verify => false}}
-      )
-      return sdk
+		sdk = LookerSDK::Client.new(
+			# Looker/API Credentials
+			:client_id => ENV['API_CLIENT_ID'],
+			:client_secret => ENV['API_SECRET'],
+			:api_endpoint => ENV['API_ENDPOINT'],
+			:connection_options => {:ssl => {:verify => false}}
+		)
+		return sdk
 	end
 
 	def self.get_field_values(model_name, explore_name)
