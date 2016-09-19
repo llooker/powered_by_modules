@@ -13,7 +13,7 @@ module ApplicationHelper
     return sdk
   end
 
-  ## MAIN CLASS
+  ## Main Method
   def self.get_looks_in_user_space(user_id)
     user_space_id = get_user_space_id(user_id)
     looks = get_looks_in_space(user_space_id)

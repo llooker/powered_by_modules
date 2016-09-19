@@ -1,4 +1,3 @@
-
 require 'looker-sdk'
 
 module ApplicationHelper

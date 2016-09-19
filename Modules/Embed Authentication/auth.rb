@@ -15,7 +15,7 @@ class Auth < ActiveRecord::Base
       host:               ENV['LOOKER_HOST'], # ex: [mylooker_instance.looker.com] (include port # if self hosted)
       secret:             ENV['EMBED_SECRET'], # Secret Key 
       session_length:     30.minutes,
-      force_logout_login: true
+      force_logout_login: true,
 
       # User Specific Permissions
       external_user_id:   102, #The External ID must be a Number and must be unique for every embedded User (Primary Key). 
