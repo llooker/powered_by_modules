@@ -5,19 +5,19 @@ Prerequsites: Have a Embedded Explore Page
 
 ###Step 2: Create a Form that takes in User Input 
 ```
-<%= form_tag create_look_path, :id=>'create_look_explore'   do %>
-  <div class="form-group">
-    <%= text_field_tag :title_of_look%>
-  </div>
-
-  <div class="form-group">
-  <%= submit_tag %>
-  </div>
-<% end %>
+<form action="/create_look" id="create_look_explore" method="post">
+	<div class="form-inline text-right">
+		<input class="form-control" id="title_of_look" name="title_of_look" placeholder="Enter a Unique Title" type="text" value="" />
+		<input class="btn btn-default" name="commit" type="submit" value="Save Report" />
+	</div>
+</form>
 ```
 
-###Step 3: Run API Call to Save a Look
+###Step 3: Pass form submission input to the server
+Pass Client information (JS events/Form Fills) to the server via Javascript/Ajax Calls 
+  Modules -> Javascript API -> Client to Server
 
+###Step 4: Run API Call to Save a Look
   Modules -> API Calls -> Create Look (Save Look)
   
 
