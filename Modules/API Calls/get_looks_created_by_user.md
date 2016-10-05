@@ -1,3 +1,12 @@
+**Input Parameters**: 
+* `user_id` specifies the user whose Looks will be retrieved
+
+
+**Resulting Action**: Returns an array of Looks created by a User with additional Metadata about each Look. 
+
+		
+
+```
 require 'looker-sdk'
 
 module ApplicationHelper
@@ -67,3 +76,6 @@ class Look
     @created_user_name = created_user_name
   end
 end
+```
+  
+ Please reach out to a Looker Analyst for any questions and / or assistance implementing.
