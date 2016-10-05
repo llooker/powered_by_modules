@@ -1,6 +1,3 @@
-text ext txt
-
-```
 require 'looker-sdk'
 
 module ApplicationHelper
@@ -34,7 +31,3 @@ module ApplicationHelper
   	end
   	
 end
-```
-
-
-text text
