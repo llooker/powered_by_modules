@@ -1,3 +1,12 @@
+**Input Parameters**: 
+* `space_id` to specify the Space (user or shared) where the list of Looks will be retrieved
+
+
+**Resulting Action**: Returns an array of Looks created in a Space with additional Metadata about each Look. 
+
+		
+
+```
 require 'looker-sdk'
 
 module ApplicationHelper
@@ -73,3 +82,6 @@ class Look
     @created_user_name = created_user_name
   end
 end
+```
+	
+Please reach out to a Looker Analyst for any questions and / or assistance implementing.
