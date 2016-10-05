@@ -1,10 +1,10 @@
-*Input Parameters*: 
-	- `user_id` for permissioning the user
-	- `query_id` for query selection
-	- `title` for the title of the Look (i.e. the saved query)
-	- `space` for the directory or Space where the Look will be saved
+**Input Parameters**: 
+	* `user_id` for permissioning the user
+	* `query_id` for query selection
+	* `title` for the title of the Look (i.e. the saved query)
+	* `space` for the directory or Space where the Look will be saved
 
-*Resulting Action*: A Look is saved in the Looker Instance based on the specified parameters.
+**Resulting Action**: A Look is saved in the Looker Instance based on the specified parameters.
 		
 
 ```
