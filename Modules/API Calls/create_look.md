@@ -1,3 +1,13 @@
+_Input Parameters_: 
+	`user_id` for permissioning the user
+	`query_id` for query selection
+	`title` for the title of the Look (i.e. the saved query)
+	`space` for the directory or Space where the Look will be saved
+
+_Resulting Action_: A Look is saved in the Looker Instance based on the specified parameters.
+		
+
+```
 require 'looker-sdk'
 
 module ApplicationHelper
@@ -31,3 +41,6 @@ module ApplicationHelper
   	end
   	
 end
+```
+		
+Please reach out to a Looker Analyst for any questions
