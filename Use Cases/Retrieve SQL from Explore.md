@@ -1,4 +1,4 @@
-Prerequsites: Have an Embedded Explore Page (see our Embed docs [here](https://looker.com/docs/reference/api-and-integration/api-reference))
+_*Prerequsites: Have an Embedded Explore Page (see our Embed docs [here](https://looker.com/docs/reference/api-and-integration/api-reference))
 
 ###Step 1: Enable Javascript API for Explore iFrame
 
