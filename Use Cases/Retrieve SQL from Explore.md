@@ -70,7 +70,7 @@ $(function(){
 
 ###Step 4: Run API Call to Save a Look
 
-[Create (Save) Look](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/create_look.md)  
+[Create Look](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/create_look.md)  
 
 
 
