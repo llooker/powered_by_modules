@@ -11,10 +11,11 @@ Take a particular Space or Project. In our fashion.ly site, we refer to the foll
 ### Step 1: API CALL
 We can use the API to get a list of all the looks and attributes about that look in a particular space or project. 
 
-API calls (Modules -> API Calls):
-Get All Looks In a Space
-Get All Looks Created By a User 
-Get All Looks in a User Home Space
+#### API calls (Modules -> API Calls):
+
+* [Get All Looks In a Space](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/list_of_looks_in_a_space.md)
+* [Get All Looks Created By a User](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/list_of_looks_created_by_user.md)
+* [Get All Looks in a User Space](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/get_looks_in_user_space.rb)
 
 (Note: The API Calls above can be adjusted to grab dashboards instead of Looks)
 
@@ -23,7 +24,7 @@ These Calls return an array of Looks with the following metadata about each of t
 
 ### Step 2: Generate Embed URL 
 
-We could display all the Looks from the API call as selections and Allow the User to visualize this look as a Data Element (Table) or as a Visualization.
+We could display all the Looks from the API call as selections and allow the User to visualize this look as a Data Element (Table) or as a Visualization.
 
 On a User Selection (of Look/Type of Look) we grab the form parameters and append the Look ID and type (Data = “&show=data”, Viz = “&show=viz”) to generate the embedded URL. 
 
@@ -35,7 +36,7 @@ embed_url = "https://instancename.looker.com/looks/<my_look_id>?<&show=data>"
 
 ### Step 3: Authenticate Embed URL 
 
-	Modules -> Embed Authentication -> Auth
+	[Embed Authentication](https://github.com/llooker/powered_by_modules/blob/master/Modules/Embed%20Authentication/auth.rb)
 
 
 
