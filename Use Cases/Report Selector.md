@@ -36,7 +36,7 @@ embed_url = "https://instancename.looker.com/looks/<my_look_id>?<&show=data>"
 
 ### Step 3: Authenticate Embed URL 
 
-	[Embed Authentication](https://github.com/llooker/powered_by_modules/blob/master/Modules/Embed%20Authentication/auth.rb)
+[Embed Authentication](https://github.com/llooker/powered_by_modules/blob/master/Modules/Embed%20Authentication/auth.rb)
 
 
 
