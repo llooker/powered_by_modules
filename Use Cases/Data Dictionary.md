@@ -73,4 +73,4 @@ end
 
 ### Step 3:
 
-Format the results from the lookML_model_explore call using custom CSS and HTML. Consider using JS Plugins to allow for Search and Sort functionality to make the dictionary more accessible. In this block, we use the [DataTable JS Plugin](https://datatables.net/).
+Format the results from the lookML_model_explore call using custom CSS and HTML. Consider using JS Plugins to allow for Search and Sort functionality to make the dictionary more accessible. In this Block, we use the [DataTable JS Plugin](https://datatables.net/).
