@@ -183,6 +183,8 @@ dimension: amount {
     sql: ${TABLE}.amount ;;
   }
   ```
+*Update Status*
+Notice that form parameters are defined in the LookML in this example. You also have the option to set form parameters on the server, but setting them in LookML makes them easier to manipulate by other Looker developers. This is particularly useful if form parameters are subject to change.
 
 ```
 dimension: status {
