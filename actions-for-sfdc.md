@@ -11,7 +11,7 @@ Once you've implemented the server and the integrated Looker and Salesforce to i
 
 ### Implementation Notes
 - **This is example code!** While lots of the pieces will work right out of the box, this code snippet requires you to input your own pieces of information specific to your Salesforce instance and your Looker instance. An engineer who knows their way around this sort of code should implement it.
-- **We're relying on Salesforce's node page, [jsforce](https://jsforce.github.io/), in concert with [node.js](https://nodejs.org/en/).** We actually strongly recommend this setup. Ruby has a different package that we tried - don’t use that! It doesn't work well because it only lets you query their RESTful API. This implementation requires being able to write to Salesforce's SOAP API.
+- **We're relying on [jsforce](https://jsforce.github.io/), a Salesforce API Library for Javascript, in concert with [node.js](https://nodejs.org/en/).** We actually strongly recommend this setup. Ruby has a different package that we tried, and had trouble with authentication for sandbox hosts. Writing the calls from scratch doesn't work well because it only lets you query their RESTful API. This implementation requires being able to write to Salesforce's SOAP API.
 - Following this implementation, **actions will always occur as a single, hard-coded Salesforce user**. With the addition of User Attributes (a Looker feature that will be released in Looker 4.4), you will be able to allow users’ actions to show up as themselves within Salesforce. This is relevant because this implementation only allows the owner of an Opportunity to be able to update it. Therefore, you need each user's credentials to be set to allow them to update their own Oppportunities.
 - We chose certain fields for this implementation, but **you can change the fields to whatever makes the most sense for your workflow**. Actions can pass information from other fields that don’t carry the actual action (and don’t necessarily have to be present in the query in Looker). For example, if your table results include `opportunity.name` but not `opportunity.id`, you can pull and send `opportunity.id` in your action anyway.
 - Finally, **all of the code snippets below came from one entire code block**. That code block has been broken up to be able to annotate sections effectively, but if you string all pieces together, you will have a complete piece of code that implements a server and all of the actions listed above.
@@ -22,14 +22,14 @@ Once you've implemented the server and the integrated Looker and Salesforce to i
 ### Get Ready
 1. Get a certificate to use SSL for this server. ([We suggest the AWS certificate manager](https://aws.amazon.com/certificate-manager/))
 2. Create a [Connected App](https://developer.salesforce.com/page/Connected_Apps) in SFDC - you'll need a consumer key from that setup process.
-3. Download Salesforce's node package, ([jsforce](https://jsforce.github.io/). 
+3. Download Salesforce's node package, [jsforce](https://jsforce.github.io/). 
 4. Ensure you're using [node.js](https://nodejs.org/en/). 
 
 ### Provide all Basic Information and Set up a Server
 This is where you'll input the information specific to your Salesforce instance, the Connected App you created, and your Looker instance.
 ```
 // Constants
-var SANDBOX_HOST = "path to your salesforce host"
+var SANDBOX_HOST = "url to your salesforce host"
 // Get these from creating a connected app in Salesforce
 var CONSUMER_KEY = "your consumer key"
 var CONSUMER_SECRET = "your consumer secret"
