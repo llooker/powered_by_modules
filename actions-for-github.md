@@ -27,7 +27,7 @@ This document will walk you through implementing Looker Actions and GitHub. We'v
 ### Configure your Server
 The next three sections should run as one code block. They're broken up here for ease of understanding and reading.
 
-```
+```ruby
 require 'sinatra'
 
 require 'octokit'
@@ -90,7 +90,7 @@ class MyServer  < Sinatra::Base
 ### Define the Forms you Want Constructed on the Server
 Some information is better to pull on the server itself (rather than asking for it in your LookML code). In these examples, we're pulling the unique list of labels available in your  GitHub repo to populate a dropdown in the form, and then passing the entire form through to Looker. If you'd prefer, you can also create forms in the Looker Actions code and not on the server at all. 
 
-```
+```ruby
   # these are the more complex forms that contain extra information from the 
   # github API (such as assignee candidates / possible labels)
 
@@ -142,7 +142,7 @@ o  end
 You can implement any or all of the following actions. They should also be considered blueprints for other actions you might want to implement.
  
 *Create an Issue*
-```
+```ruby
   post '/create_issue' do
     title = @form_params[:title]
     body = @form_params[:body]
@@ -163,7 +163,7 @@ You can implement any or all of the following actions. They should also be consi
   end
 ```
 *Add Assignee*
-```
+```ruby
   post '/issue/:issue_number/add_assignee' do |issue_number|
     login = @form_params[:user]
     @client.update_issue(REPO_NAME, issue_number, {:assignee => login})
@@ -173,7 +173,7 @@ You can implement any or all of the following actions. They should also be consi
  ```
 *Toggle Issue State from Opened to Closed*
  
-```
+```ruby
   post '/issue/:issue_number/state/:state' do |issue_number, state|
     if state == 'reopen'
       @client.reopen_issue(REPO_NAME, issue_number)
@@ -186,7 +186,7 @@ You can implement any or all of the following actions. They should also be consi
 ```
 *Add a Comment to an Issue*
 
-```
+```ruby
   post '/issue/:issue_number/add_comment' do |issue_number|
     body = @form_params[:comment_body]
 
@@ -197,7 +197,7 @@ You can implement any or all of the following actions. They should also be consi
 ```
 *Add a Label to an Issue*
 
-```
+```ruby
   # looker action will request the label form (above) to allow user to pick amongst valid labels
   post '/issue/:issue_number/add_label' do |issue_number|
     label_name = @form_params[:label]
@@ -207,7 +207,7 @@ You can implement any or all of the following actions. They should also be consi
   end
 ```
 *Remove a Label from an Issue*
-```
+```ruby
   post '/issue/:issue_number/remove_label/:label_name' do |issue_number, label_name|
     @client.remove_label(REPO_NAME, issue_number, label_name)
     
@@ -218,7 +218,7 @@ You can implement any or all of the following actions. They should also be consi
 The following sections of code will be done in the Looker IDE on the fields that you want to update to include actions. The field that you select will offer the action when you click any value of that field on the Explore page, in a Look, or in a tile on a Dashboard.
 
  *Create an Issue*
- ```
+ ```lookml
    dimension: name {
     sql: ${TABLE}.name ;;
 
@@ -231,7 +231,7 @@ The following sections of code will be done in the Looker IDE on the fields that
   ```
   
   *Add an Assignee to an Issue*
-  ``` 
+  ```lookml
    dimension: assignee {
     # note this here is bad below
     sql: COALESCE(${TABLE}.assignee, 'NONE')  ;;
@@ -244,7 +244,7 @@ The following sections of code will be done in the Looker IDE on the fields that
   }
 ```
 *Toggle Issue Open or Closed*
-```
+```lookml
 dimension: open {
     type: yesno
     sql: ${TABLE}.state = 'open' ;;
@@ -256,7 +256,7 @@ dimension: open {
   }
   ```
 *Add Comment to an Issue and Add a Label to an Issue*
-```
+```lookml
 dimension: title {
     description: "This is the name of the issue."
     required_fields: [repo.name, number]
