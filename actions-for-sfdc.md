@@ -27,7 +27,8 @@ Once you've implemented the server and the integrated Looker and Salesforce to i
 
 ### Provide all Basic Information and Set up a Server
 This is where you'll input the information specific to your Salesforce instance, the Connected App you created, and your Looker instance.
-```
+
+```javascript
 // Constants
 var SANDBOX_HOST = "url to your salesforce host"
 // Get these from creating a connected app in Salesforce
@@ -81,7 +82,7 @@ sf_conn.login(USERNAME, PASSWORD, (err, res) => {
 These are two examples of available actions, including error and permission checking.
 
 *Update ACV*
-```
+```javascript
 app.post('/update_acv', (req, res) => {
   // Parse form fields
   var opportunity_id = req.body.data.id;
@@ -118,7 +119,7 @@ app.post('/update_acv', (req, res) => {
 ```
 *Update Status*
 
-```
+```javascript
 app.post('/update_status', (req, res) => {
   var opportunity_id = req.body.data.id;
   var update_value = req.body.form_params.status;
@@ -160,7 +161,7 @@ var formResponseJson = function(isSuccess, validationError, refreshQuery) {
 ### Define the Actions in LookML
 
 *Update ACV*
-```
+```lookml
 dimension: amount {
     required_fields: [id]
     action: {
@@ -186,7 +187,7 @@ dimension: amount {
 *Update Status*
 Notice that form parameters are defined in the LookML in this example. You also have the option to set form parameters on the server, but setting them in LookML makes them easier to manipulate by other Looker developers. This is particularly useful if form parameters are subject to change.
 
-```
+```lookml
 dimension: status {
     required_fields: [id]
     action: {
