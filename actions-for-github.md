@@ -124,7 +124,7 @@ Some information is better to pull on the server itself (rather than asking for 
       {'name' => 'Label 1', 'type' => 'select'}.merge('options' => labels),
       {'name' => 'Label 2', 'type' => 'select'}.merge('options' => labels),
     ].to_json
-o  end
+  end
 
   post '/label_form.json' do
     label_names = default_client.labels(REPO_NAME).map(&:name)
