@@ -1,5 +1,4 @@
 
-
 # Creating a Data Dictionary
 
 ### Step 1: Build out LookML Model
@@ -7,6 +6,7 @@ Within your LookML Model, define Fields with descriptions, labels, and other par
 
 ### Step 2: Use API call to pull in LookML Metadata
 Connect to our API and call the following Method (lookML_model_explore) to pull in the appropriate fields that you would want to identify within your Data Dictionary. 
+
 Sample Ruby code can be found below.
 
 ```
@@ -68,7 +68,6 @@ module ApplicationHelper
 	end
 
 end
-
 ```
 
 ### Step 3:

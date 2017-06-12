@@ -1,4 +1,3 @@
-
 # Custom Use Case: Custom Embed Field Picker
 
 ### Step 1: Pick a Use Case 
@@ -8,43 +7,41 @@ Ex: End Users want to visualize a certain number of Metrics (New Users, Total Sa
 
 Here is an example of a Simple Form (with checkboxes, radio buttons) in ruby. 
 ```
-<%= form_tag("/dashboard/supplier_dashboard", method: "get") do %>
-	
-	<p>
-	<div class="form-group">
-		<%= label_tag(:gender, "Enter a Gender: ") %>
-		<!-- radio_button_tag 'gender', 'male' -->
-		<%= radio_button_tag "gender", "Male" %> Male
-		<%= radio_button_tag "gender", "Female" %> Female
-		<%= radio_button_tag "gender", "" %> Both
-	<end>
-
-	<p>
-
-	<div class="form-group">
-		<%= label_tag(:fields, "Select Your Fields: ") %> <br/>
-        <% my_fields = [
-          ["users.count", "Users Count"], 
-          ["order_items.order_count", "Order Count"], 
-          ["order_items.count", "Order Items Count"], 
-          ["inventory_items.total_cost", "Total Cost"], 
-          ["order_items.total_sale_price", "Total Sale Price"],
-          ["order_items.total_gross_margin", "Total Gross Margin"], 
-          ["order_items.average_sale_price", "Average Sale Price"], 
-          ["order_items.average_gross_margin", "Average Gross Margin"], 
-        ]
-        %>
-
-        <% my_fields.each do |x| %>
-          <%= check_box_tag 'fields[]', x[0] %>
-          <%= label_tag 'order_items_count',x[1],for: "fields_", class: 'checkbox-custom-label' %> 
-           <br/>
-        <% end %>
-	<end>
-	<br/>
-	  <%= submit_tag("Search") %>
-	<br/>
-<% end %>
+  <form id="slideout-content" role="form">
+    <div class="right-sidebar__checkboxes">
+      <label class="right-sidebar__checkbox-label">
+        <input class="right-sidebar__checkbox" type="checkbox" name="fields[]" value="users.count"
+        >
+        <span class="right-sidebar__checkbox-text">Users Count</span>
+      </label>
+      <label class="right-sidebar__checkbox-label">
+        <input class="right-sidebar__checkbox" type="checkbox" name="fields[]" value="order_items.order_count" 
+        >
+        <span class="right-sidebar__checkbox-text">Order Count</span>
+      </label>
+    </div>
+    <div>
+      <label>
+        <input class="filter__checkbox filter__checkbox--gender" type="checkbox" name="gender[]" value="Male">
+        <i class="filter__icon gender-icon icon-male"></i>
+      </label>
+      <label>
+        <input class="filter__checkbox filter__checkbox--gender" type="checkbox" name="gender[]" value="Female">
+        <i class="filter__icon gender-icon icon-female"></i>
+      </label>
+    </div>
+    <div class="right-sidebar__dates-container">
+      <div class="right-sidebar__dates">
+        <div class="right-sidebar__date-container">
+          <input name="start_range" class="right-sidebar__date" value="<%= (params[:start_range]==''|| !params[:start_range]) ? '01/01/2015' : params[:start_range] %> " data-provide='datepicker'>
+        </div>
+        <div class="right-sidebar__date-container">
+          <input name="end_range" class="right-sidebar__date"  value="<%= (params[:end_range]==''|| !params[:start_range]) ? @current_date : params[:end_range] %> " data-provide='datepicker'>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="right-sidebar__submit-padding right-sidebar__submit btn">Submit</button>
+    </form>
 ```
 
 ### Step 3: Grab Input from form, Generate query, Grab the Query Slug
@@ -52,44 +49,41 @@ Here is an example of a Simple Form (with checkboxes, radio buttons) in ruby.
 On a form submit (post or get request), grab the values from the form and start to generate an embedded Query. 
 Once a query has been generated, make an API call to get the shortened version of the Query - the Query SLUG. 
 
-Sample Default URL: /embed/query/embed/order_items?slug=XXXYYY
+Sample Default URL - 
+embed_url: "embed/query/powered_by/order_items?qid=<my_query_id>"
 
 
 ```
-
-class DashboardController < ApplicationController
-## Include information on how to adjust this for clients with Access Filter Fields
+class QueryController < ApplicationController
 
 	def create_query
+		@fields = params[:fields] #input from form
+		@gender = params[:gender] #input from form
 
-		@fields = params[:fields]
-		@fields = @fields << "order_items.created_month"
-		@gender = params[:gender]
-
+    #Looker API Call
 		query = {
        		:model=>"powered_by",
        		:view=>"order_items",
        		#:fields=>["order_items.created_month", "users.count","inventory_items.total_cost"],
        		:fields => @fields, 
-       		:filters=>{:"products.brand"=> "Allegra K", :"order_items.created_month"=> "after 2015/01/01", :"users.gender"=>@gender},
+       		:filters=>{:"products.brand"=> "Calvin Klein", :"order_items.created_month"=> "after 2015/01/01", :"users.gender"=>@gender},
        		:sorts=>["inventory_items.created_month desc"],
        		:limit=>"100",
        		:query_timezone=>"America/Los_Angeles"
       	}
+    query_slug = ApplicationHelper.get_query_slug(query)
 
-      	query_slug = ApplicationHelper.get_query_slug(query)
 
-      	@options = {
+    @options = {
 			##Using the Query Slug --> You can get the Query Slug by grabbing a URL
 			embed_url: "/embed/query/powered_by/order_items?query=#{query_slug}"
 		}
             
-            @embed_url = Auth::embed_url(@options)
+    @embed_url = Auth::embed_url(@options)
 
 	end
 end
 ```
-
 
 
 ### Authenticate with the query slug 
@@ -118,19 +112,26 @@ class Auth < ActiveRecord::Base
       external_user_id:   102, #The External ID must be a Number and must be unique for every embedded User (Primary Key). 
       first_name:         "Dr",
       last_name:          "Strange",
-      permissions:        ['see_user_dashboards', 'see_lookml_dashboards', 'access_data', 'see_looks', 'download_with_limit', 'explore'],
-      models:             ['powered_by'],
-      access_filters:     {:powered_by => {:'products.brand' => "Allegra K"}},
+
+      # User Permissions
+      permissions:        ['see_user_dashboards', 'see_lookml_dashboards', 'access_data', 'see_looks', 'download_with_limit', 'explore'], 
+      models:             ['powered_by'], #replace with name of your model
+      user_attributes:    {"company" => "Calvin Klein", "user_time_zone" => "America/New York"}, #Row level data permisisons per user and other user specific attributes.
+      group_ids:          [9],
+      external_group_id:  "Calvin Klein",  #Used to create a group space for all users of this brand. 
+      
     }.merge(additional_data)
+
 
     url = Auth::created_signed_embed_url(url_data)
 
-    "https://#{url}"
+    embed_url = "https://#{url}"
 
   end
 
 
   def self.created_signed_embed_url(options)
+    puts options.to_json
     # looker options
     secret = options[:secret]
     host = options[:host]
@@ -141,6 +142,9 @@ class Auth < ActiveRecord::Base
     json_last_name          = options[:last_name].to_json
     json_permissions        = options[:permissions].to_json
     json_models             = options[:models].to_json
+    json_group_ids          = options[:group_ids].to_json
+    json_external_group_id  = options[:external_group_id].to_json
+    json_user_attributes    = options[:user_attributes].to_json
     json_access_filters     = options[:access_filters].to_json
 
     # url/session specific options
@@ -162,29 +166,41 @@ class Auth < ActiveRecord::Base
     string_to_sign += json_external_user_id + "\n"
     string_to_sign += json_permissions      + "\n"
     string_to_sign += json_models           + "\n"
+
+    # optionally add settings not supported in older Looker versions
+    string_to_sign += json_group_ids        + "\n"  if options[:group_ids]
+    string_to_sign += json_external_group_id+ "\n"  if options[:external_group_id]
+    string_to_sign += json_user_attributes  + "\n"  if options[:user_attributes]
+
     string_to_sign += json_access_filters
 
     signature = Base64.encode64(
-                   OpenSSL::HMAC.digest(
-                      OpenSSL::Digest::Digest.new('sha1'),
-                      secret,
-                      string_to_sign.force_encoding("utf-8"))).strip
+                                 OpenSSL::HMAC.digest(
+                                        OpenSSL::Digest.new('sha1'),
+                                        secret,
+                                        string_to_sign.force_encoding("utf-8"))).strip
 
     # construct query string
     query_params = {
-      nonce:               json_nonce,
-      time:                json_time,
-      session_length:      json_session_length,
-      external_user_id:    json_external_user_id,
-      permissions:         json_permissions,
-      models:              json_models,
-      access_filters:      json_access_filters,
-      first_name:          json_first_name,
-      last_name:           json_last_name,
-      force_logout_login:  json_force_logout_login,
-      signature:           signature
+        nonce:               json_nonce,
+        time:                json_time,
+        session_length:      json_session_length,
+        external_user_id:    json_external_user_id,
+        permissions:         json_permissions,
+        models:              json_models,
+        access_filters:      json_access_filters,
+        first_name:          json_first_name,
+        last_name:           json_last_name,
+        force_logout_login:  json_force_logout_login,
+        signature:           signature
     }
-    query_string = query_params.to_a.map { |key, val| "#{key}=#{CGI.escape(val)}" }.join('&')
+    # add optional parts as appropriate
+    query_params[:group_ids] = json_group_ids if options[:group_ids]
+    query_params[:external_group_id] = json_external_group_id if options[:external_group_id]
+    query_params[:user_attributes] = json_user_attributes if options[:user_attributes]
+    query_params[:user_timezone] = options[:user_timezone].to_json if options.has_key?(:user_timezone)
+
+    query_string = URI.encode_www_form(query_params)
 
     "#{host}#{embed_path}?#{query_string}"
   end
@@ -198,10 +214,11 @@ end
 ```
 	My Embedded URL: <%= @embed_url %> 
 	<br/>
-  <%= tag(:iframe, src: @embed_url,
-                 height: 700,
-                 width: "100%", 
-                 allowtransparency: 'true')
+  <%= tag(:iframe, 
+      src: @embed_url,
+      height: 700,
+      width: "100%", 
+      allowtransparency: 'true')
   %>
 ```
 
