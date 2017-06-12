@@ -1,7 +1,7 @@
 # Custom Use Case: Custom Embed Field Picker
 
 ### Step 1: Pick a Use Case 
-Ex: End Users want to visualize a certain number of Metrics (New Users, Total Sale Price) over time for a particular Date Range and for a particular time period and with other filters specified. 
+End Users want to visualize a certain number of Metrics (New Users, Total Sale Price) over time for a particular Date Range and for a particular time period and with other filters specified. 
 
 ### Step 2: Widgetize Use Case (Toggle Buttons, Drop down selectors, etc) 
 
@@ -10,35 +10,21 @@ Here is an example of a Simple Form (with checkboxes, radio buttons) in ruby.
   <form id="slideout-content" role="form">
     <div class="right-sidebar__checkboxes">
       <label class="right-sidebar__checkbox-label">
-        <input class="right-sidebar__checkbox" type="checkbox" name="fields[]" value="users.count"
-        >
+        <input class="right-sidebar__checkbox" type="checkbox" name="fields[]" value="users.count">
         <span class="right-sidebar__checkbox-text">Users Count</span>
       </label>
       <label class="right-sidebar__checkbox-label">
-        <input class="right-sidebar__checkbox" type="checkbox" name="fields[]" value="order_items.order_count" 
-        >
+        <input class="right-sidebar__checkbox" type="checkbox" name="fields[]" value="order_items.order_count">
         <span class="right-sidebar__checkbox-text">Order Count</span>
       </label>
     </div>
     <div>
-      <label>
         <input class="filter__checkbox filter__checkbox--gender" type="checkbox" name="gender[]" value="Male">
-        <i class="filter__icon gender-icon icon-male"></i>
-      </label>
-      <label>
         <input class="filter__checkbox filter__checkbox--gender" type="checkbox" name="gender[]" value="Female">
-        <i class="filter__icon gender-icon icon-female"></i>
-      </label>
     </div>
     <div class="right-sidebar__dates-container">
-      <div class="right-sidebar__dates">
-        <div class="right-sidebar__date-container">
-          <input name="start_range" class="right-sidebar__date" value="<%= (params[:start_range]==''|| !params[:start_range]) ? '01/01/2015' : params[:start_range] %> " data-provide='datepicker'>
-        </div>
-        <div class="right-sidebar__date-container">
-          <input name="end_range" class="right-sidebar__date"  value="<%= (params[:end_range]==''|| !params[:start_range]) ? @current_date : params[:end_range] %> " data-provide='datepicker'>
-        </div>
-      </div>
+    	<input name="start_range" class="right-sidebar__date" value="2015-01-01" data-provide='datepicker'>
+    	<input name="end_range" class="right-sidebar__date"  value="today" data-provide='datepicker'>
     </div>
     <button type="submit" class="right-sidebar__submit-padding right-sidebar__submit btn">Submit</button>
     </form>
@@ -56,32 +42,33 @@ embed_url: "embed/query/powered_by/order_items?qid=<my_query_id>"
 ```
 class QueryController < ApplicationController
 
-	def create_query
-		@fields = params[:fields] #input from form
-		@gender = params[:gender] #input from form
+def create_query
+    @fields = params[:fields] #input from form
+    @gender = params[:gender] #input from form
 
     #Looker API Call
-		query = {
-       		:model=>"powered_by",
-       		:view=>"order_items",
-       		#:fields=>["order_items.created_month", "users.count","inventory_items.total_cost"],
-       		:fields => @fields, 
-       		:filters=>{:"products.brand"=> "Calvin Klein", :"order_items.created_month"=> "after 2015/01/01", :"users.gender"=>@gender},
-       		:sorts=>["inventory_items.created_month desc"],
-       		:limit=>"100",
-       		:query_timezone=>"America/Los_Angeles"
-      	}
+    query = {
+      :model=>"powered_by",
+      :view=>"order_items",
+      #:fields=>["order_items.created_month", "users.count","inventory_items.total_cost"],
+      :fields => @fields, 
+      :filters=>{
+      	:"products.brand"=> "Calvin Klein", 
+      	:"order_items.created_month"=> "after 2015/01/01", 
+	:"users.gender"=>@gender},
+      :sorts=>["inventory_items.created_month desc"],
+      :limit=>"100",
+      :query_timezone=>"America/Los_Angeles"
+    }
     query_slug = ApplicationHelper.get_query_slug(query)
 
-
     @options = {
-			##Using the Query Slug --> You can get the Query Slug by grabbing a URL
-			embed_url: "/embed/query/powered_by/order_items?query=#{query_slug}"
-		}
-            
+    ##Using the Query Slug --> You can get the Query Slug by grabbing a URL
+      embed_url: "/embed/query/powered_by/order_items?query=#{query_slug}"
+    }
     @embed_url = Auth::embed_url(@options)
-
-	end
+end
+  
 end
 ```
 
@@ -212,8 +199,8 @@ end
 ### Display Authenticated URL 
 
 ```
-	My Embedded URL: <%= @embed_url %> 
-	<br/>
+My Embedded URL: <%= @embed_url %> <br/>
+
   <%= tag(:iframe, 
       src: @embed_url,
       height: 700,
