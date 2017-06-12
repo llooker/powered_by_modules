@@ -8,7 +8,7 @@ In this example we walk through embedding an dashboard.
 
 
 ### Step 1: Create a Dashboard
-With in the Looker Application, create a dashboard that you would like to make publicly available on an external webpage. 
+Within Looker, create a dashboard that you would like to make publicly available on an external webpage. 
 
 
 ### Step 2: Generate Embed URL 
@@ -23,10 +23,10 @@ embed_url = "https://instancename.looker.com/dashboard/<your_dashboard_id>"
 ### Step 3: Authenticate Embed URL 
 
 Gather all the parameters that are required to authenticate a dashboard. 
-1. User Specific Parameters: First Name, Last Name, External User ID, Permissions, Models, Access Filter Fields
+1. User Specific Parameters: First Name, Last Name, External User ID, Permissions, Models, User Attributes
 2. System Wide Parameters: Host, Secret, Session Length, Force Login Logout
 
-Using the following snippet of code, pass in the parameters above and create a signed embedded URL that can be accessed via Iframe. 
+Using the following snippet of code, pass in the parameters above and create a signed embedded URL that can be accessed via iFrame. 
 
 ```
 require 'cgi'
@@ -149,8 +149,8 @@ class Auth < ActiveRecord::Base
 end
 ```
 
-### Step 4: Display embeded URL
-Display the embedded URL on a webpage as an Iframe
+### Step 4: Display Embed URL
+Display the embed URL on a webpage as an Iframe
 
 My Embedded URL: <%= embed_url %> 
 <br/>
@@ -192,6 +192,7 @@ embed_url: "/embed/query/<model_name>/<explore_name>?qid=<my_query_id>"
 4. Embedding a Explore Page
 embed_url = "/embed/explore/<model_name>/<explore_name>"
 Add additional permissions for an embedded explore page such as: ['save_content', 'embed_browse_spaces'] to allow users to save and view content within an embed_browse_space. 
+[Example Use Case with Embedded Explore](https://github.com/llooker/powered_by_modules/blob/master/Use%20Cases/Embed%20a%20Explore%20Page.md "Metrics Selector")
 
 
 
