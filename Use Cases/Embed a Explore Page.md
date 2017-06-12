@@ -5,8 +5,8 @@ You can embed a looker explore page, much like you would embed a dashboard.
 
 To embed a looker explore page follow the [Embed a Dashboard](https://discourse.looker.com/t/javascript-embedded-iframe-events/2298 "Embedding") Use Case and add in the appropriate embed_url. 
 
-Default Explore Page-- embed_url: "/embed/explore/<model_name>/<explore_name>?qid="<my_query_id>"
-Explore Page with pre-built Query-- embed_url: "/embed/explore/<model_name>/<explore_name>?qid="<my_query_id>"
+**Default Explore Page -** embed_url: "/embed/explore/<model_name>/<explore_name>?qid="<my_query_id>" <br/>
+**Explore Page with pre-built Query -** embed_url: "/embed/explore/<model_name>/<explore_name>?qid="<my_query_id>"
 
 
 ### Enabling iFrame to Parent Page Communication
@@ -23,9 +23,14 @@ window.addEventListener("message", function (event) {
 });
 ```
 
-A sample response might look like the following.
+A sample response might look like the following -- 
 
-<<INSERT IMAGE>>
+```
+Object {type: "explore:state:changed", explore: Object}
+explore:Object
+	absoluteUrl:"https://demoembed.looker.com/embed/explore/powered_by/order_items?	embed_domain=http:%2F%2F0.0.0.0:3000&qid=oFW25SaMKjTw4SWImC1sAH&toggle=vis"
+	url:"/embed/explore/powered_by/order_items?embed_domain=http:%2F%2F0.0.0.0:3000&qid=oFW25SaMKjTw4SWImC1sAH&toggle=vis"
+```
 
 
 ### Add State to an Embedded Explore Page
@@ -49,7 +54,7 @@ window.addEventListener("message", function (event) {
 });
 ```
 
-On every action within the iFrame your URL will now get updated with the qid allowing you to navigate between actions.
+On every action within the iFrame, the URL will now get updated with the qid, allowing users to navigate between actions on the browser.
 
 
 ### Retrieve SQL from Explore iFrame
@@ -84,15 +89,11 @@ window.addEventListener("message", function (event) {
 $(function(){
   $("#create_look_explore").submit(function(event){
     event.preventDefault();
-
-    // var action = $(this).attr('action');
-    // var method = $(this).attr('method');
-
+    
     MyApp.event_URL = MyApp.blob.explore.url;
 
     console.log(MyApp.event_URL);
     var title = $(this).find('#title_of_look').val();
-    // var data = $(this).serializeArray();
 
     $.ajax({
 		method: "post",
@@ -131,12 +132,5 @@ end
 ```
 
 
-Step 4: Run API Call to Get SQL based on the Query
-[Get SQL for Query](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/get_sql_for_query.rb)  
-
-
-
-
-
-
-
+Step 4: Run API Call to Get SQL based on the Query <br/>
+API call: [Get SQL for Query](https://github.com/llooker/powered_by_modules/blob/master/Modules/API%20Calls/get_sql_for_query.rb)  
