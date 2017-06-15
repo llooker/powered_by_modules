@@ -176,8 +176,18 @@ window.addEventListener("message", function (event) {
 ```
 [Javascript Events - Looker Documentation](https://discourse.looker.com/t/javascript-embedded-iframe-events/2298 "JS Events")
 
+### Create Custom Filters outside the Looker UI 
 
-### Extend this Example  by
+Create custom filters (checkboxes, radio buttons, maps) outside of the Looker UI in a HTML form element. Pass in filter actions (clicks, etc...) on Submit. Grab filter elements from the form and append to the end of the Dashboard URL. 
+
+```
+    @filters = "&Filter1=" + params[:filter1_value].to_s + "&Filter2=" + params[:filter2_value].to_s + "&Filter3=" + params[:filter3_value].to_s
+    @iframe_url = current_user.embed_url(
+      embed_url: "/embed/dashboards/#{dashboard_id}?embed_domain=#{embed_domain}&#{@filters}",
+    )
+```
+
+### Extend this Example by
 
 1. Embedding a LookML Dashboard
 embed_url = "/embed/dashboards/<name_of_your_model>::<name_of_lookML_dashboard>"
@@ -193,9 +203,4 @@ embed_url: "/embed/query/<model_name>/<explore_name>?qid=<my_query_id>"
 embed_url = "/embed/explore/<model_name>/<explore_name>"
 Add additional permissions for an embedded explore page such as: ['save_content', 'embed_browse_spaces'] to allow users to save and view content within an embed_browse_space. 
 [Example Use Case with Embedded Explore](https://github.com/llooker/powered_by_modules/blob/master/Use%20Cases/Embed%20a%20Explore%20Page.md "Metrics Selector")
-
-
-
-
-
 
