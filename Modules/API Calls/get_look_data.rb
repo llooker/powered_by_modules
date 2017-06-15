@@ -15,7 +15,7 @@ module ApplicationHelper
 
 	def self.get_look_data(look_id)
 		sdk = api_auth()
-      	return sdk.run_look(look_id, "jpg")
+      		return sdk.run_look(look_id, "jpg")
 	end
 
 end
