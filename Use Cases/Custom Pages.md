@@ -90,3 +90,12 @@ end
 ### Step 3:
 
 Format the results from the your API call using custom CSS and HTML. 
+
+
+
+## Extend this example by creating a Custom Visualization
+
+Pass in the results of your API call into Visualization frameworks like D3 to create custom charts and graphs. 
+
+
+[Visualization Frameworks](https://github.com/llooker/powered_by_modules/blob/master/Use%20Cases/Embed%20a%20Explore%20Page.md "Metrics Selector")
