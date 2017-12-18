@@ -174,7 +174,7 @@ window.addEventListener("message", function (event) {
   }
 });
 ```
-[Javascript Events - Looker Documentation](https://discourse.looker.com/t/javascript-embedded-iframe-events/2298 "JS Events")
+[Javascript Events - Looker Documentation](https://docs.looker.com/reference/embedding/embed-javascript-events "JS Events")
 
 ### Create Custom Filters outside the Looker UI 
 
