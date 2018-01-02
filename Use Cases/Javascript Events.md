@@ -27,7 +27,7 @@ window.addEventListener("message", function(event) {
 });
 ```
 
-<Include GIF> 
+![iam](JS Events.gif)
 
 
 ### Dynamically generate iFrame Height 
@@ -50,7 +50,7 @@ window.addEventListener('message', function (event) {
   }
 });
 ```
-<Include Images + GIF>
+![iam](JS_iframe_height.png)
 
 
 ### Return Query metadata 
@@ -82,7 +82,7 @@ window.addEventListener('message', function (event) {
   }
 });
 ```
-<Insert GIF>
+![iam](JS_Query.png)
 
 ### Trigger dashboards to be visible on tile loads
 
@@ -140,26 +140,26 @@ First, create a custom HTML form.
 ```
 On a filter click or action, the following post event transmits filter information from the parent website into the Looker iFrame to re-update the iFrame with the latest information. 
 ```
-	$('.filter_element').click(function() {
-		let Gender = `${checkboxList('gender')}`;
-		let Category = `${checkboxList('category')}`;
-		let startDate = new Date($('.start_range').val()).toISOString().slice(0,10);
-		let endDate = new Date($('.end_range').val()).toISOString().slice(0,10);
+$('.filter_element').click(function() {
+	let Gender = `${checkboxList('gender')}`;
+	let Category = `${checkboxList('category')}`;
+	let startDate = new Date($('.start_range').val()).toISOString().slice(0,10);
+	let endDate = new Date($('.end_range').val()).toISOString().slice(0,10);
 
-	  iframe.contentWindow.postMessage(JSON.stringify({
-			type:"dashboard:filters:update",
-	 		filters:{
-	 			Gender: Gender,
-	 			Date: startDate + " to " + endDate,
-	 			Category: Category
-	 		}
-		}),"https://my.looker.com");
+  	iframe.contentWindow.postMessage(JSON.stringify({
+		type:"dashboard:filters:update",
+		filters:{
+			Gender: Gender,
+			Date: startDate + " to " + endDate,
+			Category: Category
+		}
+	}),"https://my.looker.com");
 
-		iframe.contentWindow.postMessage(JSON.stringify({
-			type: "dashboard:run"
-		}),"https://my.looker.com");
+	iframe.contentWindow.postMessage(JSON.stringify({
+		type: "dashboard:run"
+	}),"https://my.looker.com");
 
-	});
+});
 ```
-<insert GIF> 
+![iam](JS_Post_filters.png)
 
