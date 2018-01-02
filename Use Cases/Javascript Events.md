@@ -27,7 +27,10 @@ window.addEventListener("message", function(event) {
 });
 ```
 
-![iam](JS Events.gif)
+<img src="https://github.com/llooker/powered_by_modules/blob/master/JS Events.gif" width="80%">
+
+
+
 
 
 ### Dynamically generate iFrame Height 
@@ -50,8 +53,7 @@ window.addEventListener('message', function (event) {
   }
 });
 ```
-![iam](JS_iframe_height.png)
-
+<img src="https://github.com/llooker/powered_by_modules/blob/master/JS_iframe_height.png" width="60%">
 
 ### Return Query metadata 
 
@@ -82,7 +84,8 @@ window.addEventListener('message', function (event) {
   }
 });
 ```
-![iam](JS_Query.png)
+<img src="https://github.com/llooker/powered_by_modules/blob/master/JS_Query.png" width="60%">
+
 
 ### Trigger dashboards to be visible on tile loads
 
@@ -161,5 +164,6 @@ $('.filter_element').click(function() {
 
 });
 ```
-![iam](JS_Post_filters.png)
+<img src="https://github.com/llooker/powered_by_modules/blob/master/JS_Post_filters.png" width="60%">
+
 
