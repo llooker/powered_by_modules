@@ -1,7 +1,8 @@
 # Javascript Event Broadcasting 
 
 ## Initial Steps
-To enable event broadcasting follow the steps below. Detailed instructions can be found on our official docs page <https://docs.looker.com/reference/embedding/embed-javascript-events> 
+To enable event broadcasting follow the steps below. [Detailed instructions](https://docs.looker.com/reference/embedding/embed-javascript-events) can be found on
+our official docs page.
 1. Whitelist your website domain (https://mywebsite.com) on your Looker Admin panel to enable communication
 2. Add your website domain to the iFrame HTML source tag <br/>
   Ex: <iframe src="https://my.looker.com/embed/dashboards/1?<b>embed_domain=https://mywebsite.com</b>" />
@@ -31,7 +32,7 @@ window.addEventListener("message", function(event) {
 
 ### Dynamically generate iFrame Height 
 
-Setting fixed length iframes can lead to multiple scrollbars. Broadcast and update your iFrame height to allow for flexible length embedded content.
+Setting fixed length iframe heights can lead to multiple scrollbars in the same window. Broadcast and update your iFrame height to allow for flexible length embedded content.
 
 ```
 window.addEventListener('message', function (event) {
